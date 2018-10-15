@@ -18,10 +18,16 @@ DFS
  
  A* algo
  =======================================
-  java ProblemSolver aso 1 2 3 4 5 6 7 8 9 0 10 11 // h1 heuristic
+ java ProblemSolver aso 1 2 3 4 5 6 7 8 9 0 10 11 // h1 heuristic
   
-  java  ProblemSolver aso 1 0 3 7 5 2 6 4 9 10 11 8
- 
+ java  ProblemSolver aso 1 0 3 7 5 2 6 4 9 10 11 8
+  
+ java  ProblemSolver aso 1 0 2 7 5 3 6 4 9 10 11 8
+  
  java ProblemSolver ase 1 2 3 4 5 6 7 8 9 0 10 11 // h2 heuristic
  
  java  ProblemSolver ase 1 0 3 7 5 2 6 4 9 10 11 8
+ 	
+ 	
+=========
+1 0 2 7 5 3 6 4 9 10 11 8 // works with all but DFS

@@ -13,10 +13,10 @@ public class DFSearch
 	 */
 	public static void search(int[] board, boolean d)
 	{
-		SearchNode root = new SearchNode(new ElevenPuzzleState(board));
+		SearchNode So = new SearchNode(new ElevenPuzzleState(board));
 		Stack<SearchNode> stack = new Stack<SearchNode>();
 
-		stack.add(root);
+		stack.add(So);
 
 		performSearch(stack, d);
 	}
@@ -56,7 +56,11 @@ public class DFSearch
 		while (!s.isEmpty()) // while the queue is not empty
 		{
 			SearchNode tempNode = (SearchNode) s.pop();
-
+			if(searchCount == 100) {
+				System.exit(-1);
+			}
+			//System.out.println("parent->child");
+			tempNode.getCurState().printStatePuzzleFormat();
 			// if tempNode is not the goal state
 			if (!tempNode.getCurState().isGoal())
 			{
@@ -70,7 +74,8 @@ public class DFSearch
 				 * the queue
 				 */
 				// Collections.reverse(tempSuccessors);
-				for (int i = 0; i < tempSuccessors.size(); i++)
+				//for (int i = tempSuccessors.size() -1; i>= 0 ;i--)
+				for (int i =0; i<tempSuccessors.size(); i++)
 				{
 					// second parameter here adds the cost of the new node to
 					// the current cost total in the SearchNode

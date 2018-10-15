@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Stack;
 
 /**
  * Defines an A* search to be performed on a qualifying puzzle.
