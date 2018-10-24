@@ -11,7 +11,7 @@ public class AStarSearch
 	 * Initialization function for 11-d puzzle A*Search
 	 * @param board
 	 */
-	public static void search(int[] board, boolean d, char heuristic)
+	public static void search(int[] board, long d, char heuristic)
 	{
 		SearchNode root = new SearchNode(new ElevenPuzzleState(board));
 		Queue<SearchNode> q = new LinkedList<SearchNode>();
@@ -49,7 +49,7 @@ public class AStarSearch
 						 */
 						checkedNode = new SearchNode(tempNode,
 								tempSuccessors.get(i), tempNode.getCost()
-										+ tempSuccessors.get(i).findCost(), 0, tempSuccessors.get(i).getPirority());
+										+ tempSuccessors.get(i).findCost(), 0);
 					}
 					else
 					{
@@ -58,7 +58,7 @@ public class AStarSearch
 								tempSuccessors.get(i), tempNode.getCost()
 										+ tempSuccessors.get(i).findCost(),
 								((ElevenPuzzleState) tempSuccessors.get(i))
-										.getEculideanist(), tempSuccessors.get(i).getPirority());
+										.getEculideanist());
 					}
 
 					// Check for repeats before adding the new node
@@ -107,9 +107,9 @@ public class AStarSearch
 			{
 				if (heuristic == 'o')
 				{
-					tempNode.getCurState().reportSolutionPath(tempNode, searchCount, "puzzleAs-h1");
+					tempNode.getCurState().reportSolutionPath(tempNode, searchCount, "puzzleAs-h1", d);
 				} else {
-					tempNode.getCurState().reportSolutionPath(tempNode, searchCount, "puzzleAs-h2");
+					tempNode.getCurState().reportSolutionPath(tempNode, searchCount, "puzzleAs-h2", d);
 				}
 				// Use a stack to track the path from the starting state to the
 				// goal state

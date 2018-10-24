@@ -1,0 +1,21 @@
+Author of this Project is Jashan Singh.
+
+The project is 11-d puzzle solver using different kind of algorithms such as :
+
+1. DFS
+2. IDFS
+3. BFS
+4. A*
+
+The main class of the project is PlayThis.java
+
+Run the main class. The console will ask for the user inputs for initial state of the puzzle 
+and then it will ask for the algorithm against which it would run.
+
+BFS and A* runs with 2 types of heuristic each. if BFS or A* are selected , program will ask user input
+for the heuristic selection as well.
+
+During the execution nothing is displayed on the screen.
+
+Once the goal test is passed , the files will be generated according to the algorithm selected with the 
+data of search path.

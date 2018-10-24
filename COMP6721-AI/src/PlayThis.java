@@ -7,9 +7,9 @@ public class PlayThis
 	{
 
 		
-		boolean debug = false;
+		//boolean debug = false;
 		char Val;
-
+		long _beginTime = System.currentTimeMillis();
 		System.out.println("Welcome to 11d Puzzle");
 		
 		System.out.println("Please enter the So state of the Puzzle");
@@ -18,27 +18,28 @@ public class PlayThis
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Select Algorithm to Play puzzle");
 		System.out.println("\t1. DFS \n\t"
+				+ "2. Iterative DFS \n\t"
 				+ "3. BFS \n\t"
 				+ "4. A* \n\t");
 		
 			String selector = scanner.nextLine();
 			switch(selector){
 				case "1" : 
-					DFSearch.search(initState, debug);
+					DFSearch.search(initState, _beginTime);
 				break;
 				
 				case "2":
-					// dfsIterateSearch(scanner.nextLine(), startTime);
+					IterativeDFS.search(initState, _beginTime);// dfsIterateSearch(scanner.nextLine(), startTime);
 				break;
 				
 				case "3" : 
 					Val = SelectHeuristic();
-					BFSearch.search(initState, debug, Val);
+					BFSearch.search(initState, _beginTime, Val);
 				break;
 
 				case "4" : 
 					Val = SelectHeuristic();
-					AStarSearch.search(initState, debug, Val);
+					AStarSearch.search(initState, _beginTime, Val);
 				break;
 				
 				default:
@@ -71,7 +72,7 @@ public class PlayThis
 		
 		
 		char value;
-		if(_heuristicVal.equals("h1")){
+		if(_heuristicVal.equals("a")){
 			value = 'o';
 		}else{
 			value = 'e';

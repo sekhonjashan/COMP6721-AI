@@ -29,6 +29,7 @@ public class ElevenPuzzleState implements State
 	private int[] curBoard;
 	private String config;
 	private int priority;
+	private int depthNode;
 
 	/**
 	 * Constructor for ElevenPuzzleState
@@ -40,15 +41,17 @@ public class ElevenPuzzleState implements State
 		curBoard = board;
 		config = "0 ";
 		priority = 0;
+		depthNode = 0;
 		setOutOfPlace();
 		setEculideanDist();
 	}
 
-	public ElevenPuzzleState(int[] board, String _config, int _priority)
+	public ElevenPuzzleState(int[] board, String _config, int _priority, int _deep)
 	{
 		curBoard = board;
 		config = _config;
 		priority = priority;
+		depthNode = _deep;
 		setOutOfPlace();
 		setEculideanDist();
 	}
@@ -62,10 +65,11 @@ public class ElevenPuzzleState implements State
 		return 1;
 	}
 
-	// public String getConfig()
-	// {
-	// 	return config;
-	// }
+	@Override
+	public int getDepthVal()
+	{
+		return depthNode;
+	}
 
 	@Override
 	public int getPirority(){
@@ -151,6 +155,7 @@ public class ElevenPuzzleState implements State
 	 * 
 	 * @return the outOfPlace h(n) value
 	 */
+	@Override
 	public int getOutOfPlace()
 	{
 		return outOfPlace;
@@ -161,6 +166,7 @@ public class ElevenPuzzleState implements State
 	 * 
 	 * @return the eculideanDist Distance h(n) value
 	 */
+	@Override
 	public int getEculideanist()
 	{
 		return ecdDist;
@@ -190,7 +196,7 @@ public class ElevenPuzzleState implements State
 	{
 		ArrayList<State> successors = new ArrayList<State>();
 		int hole = getHole();
-
+		int _deepNode = depthNode;
 		// if we CAN slide into the hole
 		if (hole-4 > 0)
 		{
@@ -198,46 +204,46 @@ public class ElevenPuzzleState implements State
 			 * we can slide "upwise" into the hole, so generate a new state for
 			 * this condition and throw it into successors
 			 */
-			switchAndStore(hole - 4, hole, successors, 1);
+			switchAndStore(hole - 4, hole, successors, 1, (_deepNode + 1));
 		}
 		// try to generate a state by sliding a tile "up-right" into the hole
 		if (hole != 7 && hole != 11 && (hole - 3) > 0)
 		{
-			switchAndStore(hole - 3, hole, successors, 2);
+			switchAndStore(hole - 3, hole, successors, 2, (_deepNode + 1));
 		}
 		// try to generate a state by sliding a tile "right" into the hole
 		if (hole != 3 && hole != 7 && hole != 11)
 		{
-			switchAndStore(hole + 1, hole, successors, 3);
+			switchAndStore(hole + 1, hole, successors, 3, (_deepNode + 1));
 		}
 		// try to generate a state by sliding a tile "down-right" into the hole
 		if (hole != 3 && hole != 7 && hole + 5  < 12)
 		{
-			switchAndStore(hole + 5, hole, successors, 4);
+			switchAndStore(hole + 5, hole, successors, 4, (_deepNode + 1));
 		}
 		// try to generate a state by sliding a tile "down" into the hole
 		if (hole + 4 < 12)
 		{
-			switchAndStore(hole + 4, hole, successors, 5);
+			switchAndStore(hole + 4, hole, successors, 5, (_deepNode + 1));
 		}
 
 		// try to generate a state by sliding a tile "down-left" into the hole
 		if (hole != 0 && hole != 4 && hole != 8 && hole +3 < 12)
 		{
-			switchAndStore(hole + 3, hole, successors, 6);
+			switchAndStore(hole + 3, hole, successors, 6, (_deepNode + 1));
 		}
 
 		// try to generate a state by sliding a tile "left" into the hole
 		if (hole != 0 && hole != 4 && hole != 8)
 		{
-			switchAndStore(hole - 1, hole, successors, 7);
+			switchAndStore(hole - 1, hole, successors, 7, (_deepNode + 1));
 		}
 		// try to generate a state by sliding a tile "up-left" into the hole
 		if (hole != 4 && hole != 8 && hole-5  > 0)
 		{
-			switchAndStore(hole - 5, hole, successors, 8);
+			switchAndStore(hole - 5, hole, successors, 8, (_deepNode + 1));
 		}
-
+		//System.out.println("ini Puzzle _deepNode"  + _deepNode);
 		return successors;
 	}
 
@@ -245,13 +251,13 @@ public class ElevenPuzzleState implements State
 	 * Switches the data at indices d1 and d2, in a copy of the current board
 	 * creates a new state based on this new board and pushes into s.
 	 */
-	private void switchAndStore(int d1, int d2, ArrayList<State> s, int priority)
+	private void switchAndStore(int d1, int d2, ArrayList<State> s, int priority, int _deepNode)
 	{
 		int[] cpy = copyBoard(curBoard);
 		int temp = cpy[d1];
 		cpy[d1] = curBoard[d2];
 		cpy[d2] = temp;
-		s.add((new ElevenPuzzleState(cpy, ALPHABETIC[d1]+" ", priority)));
+		s.add((new ElevenPuzzleState(cpy, ALPHABETIC[d1]+" ", priority, _deepNode)));
 	}
 
 	/**
@@ -270,23 +276,7 @@ public class ElevenPuzzleState implements State
 		return false;
 	}
 
-	/**
-	 * Method to print out the current state. Prints the puzzle board.
-	 */
-	@Override
-	public void printState()
-	{
-		System.out.println(curBoard[0] + " | " + curBoard[1] + " | "
-				+ curBoard[2]+ " | " + curBoard[3]);
-		System.out.println("---------------");
-		System.out.println(curBoard[4] + " | " + curBoard[5] + " | "
-				+ curBoard[6]+ " | " + curBoard[7]);
-		System.out.println("---------------");
-		System.out.println(curBoard[8] + " | " + curBoard[9] + " | "
-				+ curBoard[10]+ " | " + curBoard[11]);
-
-	}
-
+	
 	/**
 	 * Method to print out the current state. Prints the puzzle into array format.
 	 */
@@ -374,7 +364,7 @@ public class ElevenPuzzleState implements State
 							_bufferWriter.write(tempNode.getCurState().getStatePuzzleFormat() + "\n");
 					}
 
-					System.out.println("created a file with name "+ fname);
+					System.out.println("Go to File "+ fname);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}finally{
@@ -391,11 +381,14 @@ public class ElevenPuzzleState implements State
 	 * Method to print out the reportSolutionPath . Writing data into the puzzle into array format.
 	 */
 	 @Override
-		public void reportSolutionPath(SearchNode tempNode, int searchCount, String fileName){
+		public void reportSolutionPath(SearchNode tempNode, int searchCount, String fileName, long  stime){
 			Stack<SearchNode> goalPath = new Stack<SearchNode>();
 				goalPath.push(tempNode);
 				tempNode = tempNode.getParent();
-
+				if(tempNode == null) {
+					System.out.println("Hurray Goal state !!");
+					System.exit(-1);
+				}
 				while (tempNode.getParent() != null)
 				{
 					goalPath.push(tempNode);
@@ -403,19 +396,13 @@ public class ElevenPuzzleState implements State
 				}
 				goalPath.push(tempNode);
 				loadDataintoFile(fileName, goalPath);
-				// for (int i = 0; i < goalPath.size(); i++)
-				// {
-				// 	tempNode = goalPath.pop();
-				// 	//tempNode.getCurState().printState();
-				// 	//tempNode.getCurState().printStatePuzzleFormat();
-					
-				// 	// System.out.println();
-				// 	// System.out.println();
-				// }
-				System.out.println("cost was: =" + goalPath.size());
-				System.out.println("nodes examined Count: ="
+	
+				System.out.println("Solution cost: =" + goalPath.size());
+				System.out.println("Search path cost: ="
 							+ searchCount);
-
+				long etime   = System.currentTimeMillis();
+				long totalTime = etime - stime;
+					System.out.println("Performance (in ms) :" + totalTime);
 
 				System.exit(0);
 		}

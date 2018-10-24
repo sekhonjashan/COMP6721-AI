@@ -17,21 +17,25 @@ public interface State
 	// determine cost from initial state to THIS state
 	double findCost();
 
-	// print the current state into matrix formt
-	public void printState();
 
-	// print the curent state into array format
+	// print the current state into array format
 
 	public void printStatePuzzleFormat();
 
-	// retrive the current sate format
+	// Retrieve the current sate format
 	String getStatePuzzleFormat();
 
 	// compare the actual state data
 	public boolean equals(State s);
 
 	//report the solution path access recursively
-	public void reportSolutionPath(SearchNode tempNode, int searchCount, String fileName);
+	public void reportSolutionPath(SearchNode tempNode, int searchCount, String fileName, long stime);
 
 	int getPirority();
+
+	int getOutOfPlace();
+
+	int getEculideanist();
+
+	int getDepthVal();
 }

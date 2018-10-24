@@ -11,8 +11,7 @@ public class SearchNode
 	private double cost; // cost to get to this state
 	private double hCost; // heuristic cost
 	private double fCost; // f(n) cost
-	private int prirority;
-
+	//private int _iterate;
 	/**
 	 * Constructor for the root SearchNode
 	 * 
@@ -26,7 +25,7 @@ public class SearchNode
 		cost = 0;
 		hCost = 0;
 		fCost = 0;
-		prirority = 0; 
+		//_iterate = 0;
 	}
 
 	/**
@@ -37,14 +36,14 @@ public class SearchNode
 	 * @param c the g(n) cost to get to this node
 	 * @param h the h(n) cost to get to this node
 	 */
-	public SearchNode(SearchNode prev, State s, double c, double h, int _prirority)
+	public SearchNode(SearchNode prev, State s, double c, double h)
 	{
 		parent = prev;
 		curState = s;
 		cost = c;
 		hCost = h;
 		fCost = cost + hCost;
-		prirority = _prirority;
+		//_iterate = _iterate;
 	}
 
 	/**
@@ -73,11 +72,11 @@ public class SearchNode
 
 	/**
 	 * @return the cost
-	 */
-	public int getPirority()
-	{
-		return prirority;
-	}
+	//  */
+	// public int getIterateNode()
+	// {
+	// 	return _iterate;
+	// }
 
 	/**
 	 * 

@@ -13,7 +13,7 @@ public class BFSearch
 	 * 
 	 * @param board
 	 */
-	public static void search(int[] board, boolean d, char heuristic)
+	public static void search(int[] board, long d, char heuristic)
 	{
 		SearchNode root = new SearchNode(new ElevenPuzzleState(board));
 		Queue<SearchNode> queue = new LinkedList<SearchNode>();
@@ -51,7 +51,7 @@ public class BFSearch
 	 * 
 	 * @param q - A SearchNode queue to be populated and searched
 	 */
-	public static void performSearch(Queue<SearchNode> q, boolean d, char heuristic)
+	public static void performSearch(Queue<SearchNode> q, long d, char heuristic)
 	{
 		int searchCount = 1; // counter for number of iterations
 
@@ -81,7 +81,7 @@ public class BFSearch
 							tempSuccessors.get(i), tempNode.getCost()
 									+ tempSuccessors.get(i).findCost(), 
 									((ElevenPuzzleState) tempSuccessors.get(i))
-										.getOutOfPlace(),  tempSuccessors.get(i).getPirority());
+										.getOutOfPlace());
 						}
 					else
 					{
@@ -90,7 +90,7 @@ public class BFSearch
 								tempSuccessors.get(i), tempNode.getCost()
 										+ tempSuccessors.get(i).findCost(),
 								((ElevenPuzzleState) tempSuccessors.get(i))
-										.getEculideanist(), tempSuccessors.get(i).getPirority());
+										.getEculideanist());
 					}
 
 					if (!checkRepeats(newNode))
@@ -109,9 +109,9 @@ public class BFSearch
 
 				if (heuristic == 'o')
 				{
-					tempNode.getCurState().reportSolutionPath(tempNode, searchCount, "puzzleBFS-h1");
+					tempNode.getCurState().reportSolutionPath(tempNode, searchCount, "puzzleBFS-h1", d);
 				} else {
-					tempNode.getCurState().reportSolutionPath(tempNode, searchCount, "puzzleBFS-h2");
+					tempNode.getCurState().reportSolutionPath(tempNode, searchCount, "puzzleBFS-h2", d);
 				}
 
 				// Stack<SearchNode> goalPath = new Stack<SearchNode>();

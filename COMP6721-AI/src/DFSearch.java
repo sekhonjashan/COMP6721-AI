@@ -11,7 +11,7 @@ public class DFSearch
 	 * 
 	 * @param board
 	 */
-	public static void search(int[] board, boolean d)
+	public static void search(int[] board, long d)
 	{
 		SearchNode So = new SearchNode(new ElevenPuzzleState(board));
 		Stack<SearchNode> stack = new Stack<SearchNode>();
@@ -49,16 +49,16 @@ public class DFSearch
 	 * 
 	 * @param s - A SearchNode queue to be populated and searched
 	 */
-	public static void performSearch(Stack<SearchNode> s, boolean d)
+	public static void performSearch(Stack<SearchNode> s, long d)
 	{
 		int searchCount = 1; // counter for number of iterations
 
 		while (!s.isEmpty()) // while the queue is not empty
 		{
 			SearchNode tempNode = (SearchNode) s.pop();
-			if(searchCount == 100) {
+			/*if(searchCount == 100) {
 				System.exit(-1);
-			}
+			}*/
 			//System.out.println("parent->child");
 			tempNode.getCurState().printStatePuzzleFormat();
 			// if tempNode is not the goal state
@@ -73,15 +73,13 @@ public class DFSearch
 				 * if they've already been evaluated, and if not, add them to
 				 * the queue
 				 */
-				// Collections.reverse(tempSuccessors);
-				//for (int i = tempSuccessors.size() -1; i>= 0 ;i--)
 				for (int i =0; i<tempSuccessors.size(); i++)
 				{
 					// second parameter here adds the cost of the new node to
 					// the current cost total in the SearchNode
 					SearchNode newNode = new SearchNode(tempNode,
 							tempSuccessors.get(i), tempNode.getCost()
-									+ tempSuccessors.get(i).findCost(), 0, tempSuccessors.get(i).getPirority());
+									+ tempSuccessors.get(i).findCost(), 0);
 
 					if (!checkRepeats(newNode))
 					{
@@ -91,46 +89,12 @@ public class DFSearch
 				searchCount++;
 			}
 			else
-			// The goal state has been found. Print the path it took to get to
-			// it.
 			{
-				// Use a stack to track the path from the starting state to the
-				// goal state
-				tempNode.getCurState().reportSolutionPath(tempNode, searchCount, "puzzleDFS");
-				// Stack<SearchNode> goalPath = new Stack<SearchNode>();
-				// goalPath.push(tempNode);
-				// tempNode = tempNode.getParent();
-
-				// while (tempNode.getParent() != null)
-				// {
-				// 	goalPath.push(tempNode);
-				// 	tempNode = tempNode.getParent();
-				// }
-				// goalPath.push(tempNode);
-				// tempNode.getCurState().loadDataintoFile("puzzleDFS" , goalPath);
-				// // // The size of the stack before looping through and emptying it.
-				// // int loopSize = goalPath.size();
-
-				// // for (int i = 0; i < loopSize; i++)
-				// // {
-				// // 	tempNode = goalPath.pop();
-				// // 	//tempNode.getCurState().printState();
-				// // 	tempNode.getCurState().printStatePuzzleFormat();
-				// // 	// System.out.println();
-				// // 	// System.out.println();
-				// // }
-				// System.out.println("The cost was: " + tempNode.getCost());
-				// if (d)
-				// {
-				// 	System.out.println("The number of nodes examined: "
-				// 			+ searchCount);
-				// }
-
-				// System.exit(0);
+				tempNode.getCurState().reportSolutionPath(tempNode, searchCount, "puzzleDFS", d);
+				
 			}
 		}
 
-		// This should never happen with our current puzzles.
 		System.out.println("Error! No solution found!");
 	}
 }
